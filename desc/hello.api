@@ -1,0 +1,14 @@
+syntax = "v1"
+
+type HelloReq {
+	Name string `form:"name"`
+}
+
+type HelloResp {
+	Message string `json:"message"`
+}
+
+service hello {
+	@handler Hello
+	get /hello(HelloReq) returns (HelloResp)
+}
