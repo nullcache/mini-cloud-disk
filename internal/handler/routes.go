@@ -28,6 +28,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/sendEmail",
 				Handler: user.SendEmailHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/refresh-token",
+				Handler: user.RefreshTokenHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/user"),
 	)

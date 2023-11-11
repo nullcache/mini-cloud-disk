@@ -7,8 +7,21 @@ type LoginReq struct {
 }
 
 type LoginResp struct {
-	AccessToken  string `json:"access_token"`
-	AccessExpire int64  `json:"access_expire"`
+	AccessToken   string `json:"access_token"`
+	AccessExpire  int64  `json:"access_expire"`
+	RefreshToken  string `json:"refresh_token"`
+	RefreshExpire int64  `json:"refresh_expire"`
+}
+
+type RefreshTokenReq struct {
+	RefreshToken string `json:"refresh_token"`
+}
+
+type RefreshTokenResp struct {
+	AccessToken   string `json:"access_token"`
+	AccessExpire  int64  `json:"access_expire"`
+	RefreshToken  string `json:"refresh_token"`
+	RefreshExpire int64  `json:"refresh_expire"`
 }
 
 type RegisterReq struct {

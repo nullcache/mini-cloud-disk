@@ -6,8 +6,21 @@ type LoginReq {
 }
 
 type LoginResp {
-	AccessToken  string `json:"access_token"`
-	AccessExpire int64  `json:"access_expire"`
+	AccessToken   string `json:"access_token"`
+	AccessExpire  int64  `json:"access_expire"`
+	RefreshToken  string `json:"refresh_token"`
+	RefreshExpire int64  `json:"refresh_expire"`
+}
+
+type RefreshTokenReq {
+	RefreshToken string `json:"refresh_token"`
+}
+
+type RefreshTokenResp {
+	AccessToken   string `json:"access_token"`
+	AccessExpire  int64  `json:"access_expire"`
+	RefreshToken  string `json:"refresh_token"`
+	RefreshExpire int64  `json:"refresh_expire"`
 }
 
 type RegisterReq {
@@ -44,6 +57,10 @@ service cloud-disk {
 	@doc "发送邮件"
 	@handler sendEmailHandler
 	post /sendEmail(SendEmailReq)
+
+	@doc "刷新token"
+	@handler refreshTokenHandler
+	post /refresh-token(RefreshTokenReq) returns (RefreshTokenResp)
 }
 
 @server (

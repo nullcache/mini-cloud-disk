@@ -5,8 +5,9 @@ import "github.com/zeromicro/go-zero/rest"
 type Config struct {
 	rest.RestConf
 	JwtAuth struct {
-		AccessSecret string
-		AccessExpire int64
+		AccessSecret  string
+		AccessExpire  int64 `json:",default=86400"`
+		RefreshExpire int64 `json:",default=172800"`
 	}
 	DB struct {
 		DataSource string
@@ -23,7 +24,7 @@ type Config struct {
 		Username        string `json:",env=MAIL_USERNAME"`
 		Password        string `json:",env=MAIL_PASSWORD"`
 		CodeLength      int    `json:",default=6"`
-		CodeExpire      int    `json:",default=60"`
+		CodeExpire      int    `json:",default=300"`
 		CodeWords       string `json:",default=0123456789"`
 		SendLimitPerDay int    `json:",default=5"`
 	}

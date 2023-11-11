@@ -1,10 +1,14 @@
 package tool
 
 import (
+	"context"
 	"crypto/tls"
+	"errors"
 	"math/rand"
+	"strconv"
 	"time"
 
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/nullcache/mini-cloud-disk/internal/config"
 	"gopkg.in/gomail.v2"
 )
@@ -32,4 +36,39 @@ func GenRand(words string, length int) string {
 		code += string(words[rand.New(s).Intn(len([]rune(words)))])
 	}
 	return code
+}
+
+type GenTokenRes struct {
+	AccessToken  string
+	AccessExpire int64
+}
+
+func GenJwtToken(secret string, iat, expire int64, payload string) (*GenTokenRes, error) {
+	claims := make(jwt.MapClaims)
+	claims["exp"] = iat + expire
+	claims["iat"] = iat
+	claims["payload"] = payload
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	if token, err := token.SignedString([]byte(secret)); err != nil {
+		return nil, err
+	} else {
+		return &GenTokenRes{
+			AccessToken:  token,
+			AccessExpire: expire,
+		}, nil
+	}
+}
+
+func GetIdFromCtx(ctx context.Context) (int64, error) {
+	idStr, ok := ctx.Value("payload").(string)
+	if !ok {
+		return 0, errors.New("token不合法")
+	}
+
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		return 0, errors.New("token不合法")
+	}
+
+	return id, nil
 }

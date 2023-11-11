@@ -5,6 +5,7 @@ Port: 9999
 JwtAuth:
   AccessSecret: ZGFkd2Fhc2R3YXNkd2FkZA
   AccessExpire: 86400
+  RefreshExpire: 172800
 
 DB:
   DataSource: root:123456@tcp(localhost:3306)/cloud-disk?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
