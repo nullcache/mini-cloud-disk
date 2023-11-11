@@ -1,8 +1,8 @@
+import { Suspense, memo } from "react";
 import "./App.css";
-import Login from "./Login";
+import { useRoutes } from "react-router";
+import routes from "@/router/index";
 
-function App() {
-  return <Login />;
-}
+const App = memo(() => <Suspense fallback="">{useRoutes(routes)}</Suspense>);
 
 export default App;

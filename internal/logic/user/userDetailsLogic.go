@@ -35,6 +35,9 @@ func (l *UserDetailsLogic) UserDetails() (resp *types.UserDetailsResp, err error
 	if err != nil && err != sqlc.ErrNotFound {
 		return nil, err
 	}
+	if user == nil {
+		return nil, fmt.Errorf("用户不存在")
+	}
 	return &types.UserDetailsResp{
 		Id:       fmt.Sprint(user.Id),
 		Username: user.Username,

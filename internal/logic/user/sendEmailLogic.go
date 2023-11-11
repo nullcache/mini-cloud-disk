@@ -46,13 +46,9 @@ func (l *SendEmailLogic) SendEmail(req *types.SendEmailReq) error {
 		return fmt.Errorf("验证码生成错误")
 	}
 
-	expireTime, _ := strconv.ParseInt(eMapArr[1], 10, 64)
 	sendTimes, _ := strconv.ParseInt(eMapArr[2], 10, 64)
 	timeWindow, _ := strconv.ParseInt(eMapArr[3], 10, 64)
 
-	if expireTime > time.Now().Unix() {
-		return fmt.Errorf("验证码已发送，请稍后再试")
-	}
 	if sendTimes >= int64(l.svcCtx.Config.MailVerification.SendLimitPerDay) && time.Now().Unix() < timeWindow {
 		return fmt.Errorf("今日发送次数已达上限")
 	}

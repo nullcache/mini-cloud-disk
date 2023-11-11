@@ -20,7 +20,7 @@ func RefreshTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := user.NewRefreshTokenLogic(r.Context(), svcCtx)
 		resp, err := l.RefreshToken(&req)
 		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.WriteJsonCtx(r.Context(), w, 401, err)
 		} else {
 			httpx.OkJsonCtx(r.Context(), w, resp)
 		}

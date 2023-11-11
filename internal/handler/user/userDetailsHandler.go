@@ -13,7 +13,7 @@ func UserDetailsHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := user.NewUserDetailsLogic(r.Context(), svcCtx)
 		resp, err := l.UserDetails()
 		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.WriteJsonCtx(r.Context(), w, 401, err)
 		} else {
 			httpx.OkJsonCtx(r.Context(), w, resp)
 		}
