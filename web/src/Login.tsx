@@ -59,7 +59,7 @@ const LoginForm = () => {
           activeKey={loginType}
           onChange={(activeKey) => setLoginType(activeKey as LoginType)}
         >
-          <Tabs.TabPane key={"login"} tab={"账号密码登录"} />
+          <Tabs.TabPane key={"login"} tab={"登录"} />
           <Tabs.TabPane key={"register"} tab={"注册"} />
         </Tabs>
         {loginType === "login" && (

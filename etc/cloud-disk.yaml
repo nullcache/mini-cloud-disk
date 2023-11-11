@@ -1,0 +1,20 @@
+Name: cloud-disk
+Host: 0.0.0.0
+Port: 9999
+
+JwtAuth:
+  AccessSecret: ZGFkd2Fhc2R3YXNkd2FkZA
+  AccessExpire: 86400
+
+DB:
+  DataSource: root:123456@tcp(localhost:3306)/cloud-disk?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai
+
+Log:
+  Encoding: plain
+
+Redis:
+  Host: 127.0.0.1:6379
+
+MailVerification:
+  Host: smtp.163.com
+  Port: 465

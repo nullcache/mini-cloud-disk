@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	user "github.com/nullcache/mini-cloud-disk/internal/handler/user"
 	"github.com/nullcache/mini-cloud-disk/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -13,10 +14,33 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodGet,
-				Path:    "/hello",
-				Handler: HelloHandler(serverCtx),
+				Method:  http.MethodPost,
+				Path:    "/login",
+				Handler: user.LoginHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/register",
+				Handler: user.RegisterHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/sendEmail",
+				Handler: user.SendEmailHandler(serverCtx),
 			},
 		},
+		rest.WithPrefix("/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/details",
+				Handler: user.UserDetailsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		rest.WithPrefix("/user"),
 	)
 }

@@ -1,28 +1,28 @@
-package handler
+package user
 
 import (
 	"net/http"
 
-	"github.com/nullcache/mini-cloud-disk/internal/logic"
+	"github.com/nullcache/mini-cloud-disk/internal/logic/user"
 	"github.com/nullcache/mini-cloud-disk/internal/svc"
 	"github.com/nullcache/mini-cloud-disk/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func HelloHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func SendEmailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.HelloReq
+		var req types.SendEmailReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewHelloLogic(r.Context(), svcCtx)
-		resp, err := l.Hello(&req)
+		l := user.NewSendEmailLogic(r.Context(), svcCtx)
+		err := l.SendEmail(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			httpx.Ok(w)
 		}
 	}
 }

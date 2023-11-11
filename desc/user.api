@@ -1,0 +1,59 @@
+syntax = "v1"
+
+type LoginReq {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResp {
+	AccessToken  string `json:"access_token"`
+	AccessExpire int64  `json:"access_expire"`
+}
+
+type RegisterReq {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Code     string `json:"code"`
+}
+
+type SendEmailReq {
+	Email string `json:"email"`
+}
+
+type UserDetailsResp {
+	Id       string `json:"id"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+}
+
+@server (
+	prefix: /user
+	group: user
+)
+
+service cloud-disk {
+	@doc "登录"
+	@handler loginHandler
+	post /login(LoginReq) returns (LoginResp)
+
+	@doc "注册"
+	@handler registerHandler
+	post /register(RegisterReq)
+
+	@doc "发送邮件"
+	@handler sendEmailHandler
+	post /sendEmail(SendEmailReq)
+}
+
+@server (
+	prefix: /user
+	group: user
+	jwt: JwtAuth
+)
+
+service cloud-disk {
+	@doc "获取用户信息"
+	@handler userDetailsHandler
+	get /details returns (UserDetailsResp)
+}
